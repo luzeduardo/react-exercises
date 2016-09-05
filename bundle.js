@@ -27206,6 +27206,10 @@
 	    //removing listeners
 	    this.unbind('notes');
 	  },
+	  handleAddNote: function handleAddNote() {
+	    //update firebase
+	    this.ref.child(this.props.params.username).child(this.state.notes.length).set(newNote);
+	  },
 	  render: function render() {
 
 	    return React.createElement(
@@ -27224,7 +27228,10 @@
 	      React.createElement(
 	        'div',
 	        { className: 'col-md-4' },
-	        React.createElement(Notes, { username: this.props.params.username, notes: this.state.notes })
+	        React.createElement(Notes, {
+	          username: this.props.params.username,
+	          notes: this.state.notes,
+	          addNote: this.handleAddNote })
 	      )
 	    );
 	  }
