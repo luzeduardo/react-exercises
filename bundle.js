@@ -27174,8 +27174,8 @@
 	var UserProfile = __webpack_require__(240);
 	var Notes = __webpack_require__(241);
 
-	var ReactFireMixin = __webpack_require__(243);
-	var firebase = __webpack_require__(244);
+	var ReactFireMixin = __webpack_require__(244);
+	var firebase = __webpack_require__(245);
 
 	var Profile = React.createClass({
 	  displayName: 'Profile',
@@ -27206,7 +27206,7 @@
 	    //removing listeners
 	    this.unbind('notes');
 	  },
-	  handleAddNote: function handleAddNote() {
+	  handleAddNote: function handleAddNote(newNote) {
 	    //update firebase
 	    this.ref.child(this.props.params.username).child(this.state.notes.length).set(newNote);
 	  },
@@ -27320,12 +27320,15 @@
 
 	var React = __webpack_require__(3);
 	var NotesList = __webpack_require__(242);
+	var AddNote = __webpack_require__(243);
+
 	var Notes = React.createClass({
 	  displayName: 'Notes',
 
 	  propTypes: {
 	    username: React.PropTypes.string.isRequired,
-	    notes: React.PropTypes.array.isRequired
+	    notes: React.PropTypes.array.isRequired,
+	    addNote: React.PropTypes.func.isRequired
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -27337,6 +27340,7 @@
 	        'Notes for ',
 	        this.props.username
 	      ),
+	      React.createElement(AddNote, { username: this.props.username, addNote: this.props.addNote }),
 	      React.createElement(NotesList, { notes: this.props.notes })
 	    );
 	  }
@@ -27376,6 +27380,50 @@
 
 /***/ },
 /* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(3);
+
+	var AddNote = React.createClass({
+	  displayName: 'AddNote',
+
+	  propTypes: {
+	    username: React.PropTypes.string.isRequired,
+	    addNote: React.PropTypes.func.isRequired
+	  },
+	  setRef: function setRef(ref) {
+	    this.note = ref;
+	  },
+	  handleSubmit: function handleSubmit() {
+	    var newNote = this.note.value;
+	    this.note.value = '';
+	    this.props.addNote(newNote);
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'input-groupt' },
+	      React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Add new note',
+	        ref: this.setRef }),
+	      React.createElement(
+	        'span',
+	        { className: 'input-group-btn' },
+	        React.createElement(
+	          'button',
+	          { type: 'button', className: 'btn btn-default', onClick: this.handleSubmit },
+	          'Submit'
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = AddNote;
+
+/***/ },
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -27781,7 +27829,7 @@
 
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27791,12 +27839,12 @@
 	 *
 	 *   firebase = require('firebase');
 	 */
-	__webpack_require__(245);
+	__webpack_require__(246);
 	module.exports = firebase;
 
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*! @license Firebase v3.3.0

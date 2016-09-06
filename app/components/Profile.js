@@ -34,7 +34,7 @@ var Profile = React.createClass({
     //removing listeners
     this.unbind('notes');
   },
-  handleAddNote: function() {
+  handleAddNote: function(newNote) {
     //update firebase
     this.ref.child(this.props.params.username).child(this.state.notes.length).set(newNote);
   },
