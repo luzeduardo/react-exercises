@@ -11,7 +11,7 @@ var Profile = React.createClass({
   mixins: [ReactFireMixin],
   getInitialState: function() {
     return {
-      notes: ['note1','note2'],
+      notes: [],
       bio: {
         'name':'Eduardo Luz'
       },
@@ -28,6 +28,11 @@ var Profile = React.createClass({
     firebase.initializeApp(config);
     this.ref = firebase.database().ref('/');
     var childRef = this.ref.child(this.props.params.username);
+
+    // var FirebaseTokenGenerator = require("firebase-token-generator");
+    // var tokenGenerator = new FirebaseTokenGenerator("<YOUR_FIREBASE_SECRET>");
+    // var token = tokenGenerator.createToken({ uid: "uniqueId1", some: "arbitrary", data: "here" });
+
     this.bindAsArray(childRef, 'notes');
   },
   componentWillUnmount: function() {
